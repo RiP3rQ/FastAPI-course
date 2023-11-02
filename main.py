@@ -26,7 +26,7 @@ def read_root():
 def get_posts():
     return {"Data": my_posts}
 
-@app.post("/posts")
+@app.post("/posts", status_code=201)
 def create_post(newPost: Post):
     print (newPost)
     post_dict = newPost.model_dump()
@@ -39,6 +39,15 @@ def get_post(id: int):
     for post in my_posts:
         if post["id"] == id:
             return post
+    
+    raise HTTPException(status_code=404, detail="Post not found")
+
+@app.delete("/posts/{id}")
+def delete_post(id: int):
+    for index, post in enumerate(my_posts):
+        if post["id"] == id:
+            my_posts.pop(index)
+            return {"message": "Post deleted successfully"}
     
     raise HTTPException(status_code=404, detail="Post not found")
 
