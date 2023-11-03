@@ -4,7 +4,7 @@ from fastapi import FastAPI
 
 from . import models
 from .database import engine
-from .routers import post, user
+from .routers import post, user, auth
 
 # ------------------------------------------------------------------ APP ------------------------------------------------------------------ #
 
@@ -16,6 +16,7 @@ models.Base.metadata.create_all(bind=engine) #create tables in db with ORM
 
 app.include_router(post.router) #include post routers
 app.include_router(user.router) #include user routers
+app.include_router(auth.router) #include auth routers
 
 #basic api route
 @app.get("/")
