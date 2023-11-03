@@ -21,6 +21,8 @@ models.Base.metadata.create_all(bind=engine) #create tables in db with ORM
 def read_root():
     return {"Hello": "World"}
 
+
+# ------------------------------------------------------------------ POSTS ------------------------------------------------------------------ #
 @app.get("/posts", response_model = List[schemas.Post])
 def get_posts(db: Session = Depends(get_db)):
     posts = db.query(models.Post).all()
@@ -68,3 +70,15 @@ def update_post(id: int, post: schemas.PostCreate, db: Session = Depends(get_db)
     db.commit()
     
     return updated_post.first()
+
+
+
+# ------------------------------------------------------------------ USERS ------------------------------------------------------------------ #
+@app.post("/users", status_code=status.HTTP_201_CREATED, response_model = schemas.UserOut)
+def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    user = models.User(**user.model_dump())
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    return user
