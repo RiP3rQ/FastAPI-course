@@ -10,7 +10,7 @@ from .routers import post, user, auth, vote
 
 app = FastAPI() #create FastAPI instance
 
-models.Base.metadata.create_all(bind=engine) #create tables in db with ORM
+#models.Base.metadata.create_all(bind=engine) #create tables in db with ORM
 
 #origins = ["*"] #list of origins that can access the API
 
