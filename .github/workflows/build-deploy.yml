@@ -62,7 +62,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/fastapi-course:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fastapi-course:latest
 
   # deploy:
   #   runs-on: ubuntu-latest
