@@ -17,6 +17,7 @@ services:
       - SECRET_KEY=nbogagwa0989879awgawgawggawgwa
       - ALGORITHM=HS256
       - ACCESS_TOKEN_EXPIRE_MINUTES=30
+    #command: bash -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload" #use alembic to create tables and then run the app
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     depends_on:
       - postgres
@@ -24,7 +25,7 @@ services:
   postgres:
     image: postgres
     environment:
-      - POSTGRES_PASSWORD=password123
+      - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=fastapi
     volumes:
       - postgres-db:/var/lib/postgresql/data
