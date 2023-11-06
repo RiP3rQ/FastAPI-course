@@ -1,0 +1,109 @@
+sudo apt update && sudo apt upgrade -y
+
+sudo apt install python3-pip
+
+sudo pip3 install virtualenv --break-system-packages
+
+sudo apt install postgresql postgresql-contrib -y
+
+su - postgres
+
+psql -U postgres
+
+\password postgres
+
+\q
+
+exit
+
+cd /etc/postgres/15/main
+
+sudo vi postgresql.conf
+
+sudo vi pg_hba.conf
+
+sudo systemctl restart postgresql
+
+adduser riperq
+
+usermod -aG sudo riperq
+
+su - riperq
+
+mkdir fastapi
+
+cd fastapi
+
+virtualenv venv
+
+source venv/bin/activate
+
+deactivate
+
+source venv/bin/activate
+
+mkdir src
+
+cd src
+
+git clone https://github.com/RiP3rQ/FastAPI-course.git .
+
+sudo apt install libpq-dev
+
+pip install -r requirements.txt
+
+cd ~
+
+vi .env
+
+set -o allexport; source /home/riperq/.env; set +o allexport
+
+printenv
+
+vi .profile > write in last line "set -o allexport; source /home/riperq/.env; set +o allexport"
+
+sudo reboot
+
+alembic upgrade head
+
+uvicorn main:app --host 0.0.0.0
+
+pip install gunicorn
+
+pip install httptools uvloop
+
+gunicorn -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:8000
+
+sudo vi api.service > paste in file > gunicorn.service file content
+
+systemctl start api
+
+systemctl restart api
+
+systemctl status api
+
+systemctl daemon-reload
+
+sudo apt install nginx -y
+
+cd /etc/nginx/sites-available/
+
+sudo vi default > paste in file > nginx file content[!location!]
+
+systemctl restart nginx
+
+sudo snap install --classic certbot
+
+sudo certbot --nginx
+
+sudo ufw status
+
+sudo ufw allow http
+
+sudo ufw allow https
+
+sudo ufw allow ssh
+
+sudo ufw allow 5432
+
+sudo ufw enable
